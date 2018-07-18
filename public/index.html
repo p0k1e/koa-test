@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>This is static</title>
+</head>
+
+<body>
+  <style>
+    .button {
+      display: inline-block;
+      border-radius: 5px;
+      padding: 5px 20px;
+      border: 1px solid orange;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+    }
+  </style>
+  <script>
+    function register() {
+      const displayName = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      fetch('./user', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ displayName, email, password })
+      }).then(res => res.json()).then(result => {
+        console.info('@@ Register result: ', result);
+      })
+    }
+
+    function login() {
+      const email = document.getElementById('login').value;
+      const password = document.getElementById('loginpass').value;
+
+      fetch('./login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      }).then(res => res.json()).then(result => {
+        console.info('@@ login result: ', result);
+      })
+    }
+  </script>
+  <!-- Login form -->
+  <form action="#">
+    <h2>Login</h2>
+    <input type="text" id="login">
+    <input type="password" id="loginpass">
+    <span class="button" onclick="login()">Login</span>
+  </form>
+  <!-- Register form -->
+  <form action="#">
+    <h2>Register</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" />
+    <label for="email">Email:</label>
+    <input type="email" id="email">
+    <label for="pass">Password</label>
+    <input type="password" id="password">
+    <span class="button" onclick="register()">Register</span>
+  </form>
+</body>
+
+</html>
